@@ -1,7 +1,7 @@
 const INITIAL_STATE = {
   sections: [
     {
-      title: 'pant',
+      title: 'paint',
       imageUrl:
         'https://cdn.dribbble.com/users/2181562/screenshots/14318336/media/f1736cb5024a6ced00f9b91c12fb7627.jpg?compress=1&resize=800x600',
       id: 1,
