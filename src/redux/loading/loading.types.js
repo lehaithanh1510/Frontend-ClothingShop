@@ -1,0 +1,3 @@
+export const LoadingActionTypes = {
+    CHANGE_CURRENT_LOADING_STATUS: 'CHANGE_CURRENT_LOADING_STATUS',
+};

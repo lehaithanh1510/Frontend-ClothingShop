@@ -19,12 +19,11 @@ import axiosInstance from '../../utils/axios';
 import FormInput from '../form-input/form-input.component';
 import { Redirect, useHistory } from 'react-router';
 import { renderErrorMessage } from '../../utils/helpers';
+import { changeCurrentLoadingStatus } from '../../redux/loading/loading.action';
 
 const CheckoutPage = () => {
   const cartDetail = useSelector((state) => state.cart.cartItems);
   const currentUser = useSelector((state) => state.user.currentUser);
-
-  console.log(currentUser);
 
   const dispatch = useDispatch();
   const history = useHistory();
@@ -50,7 +49,6 @@ const CheckoutPage = () => {
     const cart = await axiosInstance.get('cart/findCart');
     if (cart.success) {
       dispatch(setItem(cart.data.items));
-      // setTotalPrice(cart.data.totalPrice);
     }
   };
   const [values, setValues] = useState({
@@ -169,15 +167,20 @@ const CheckoutPage = () => {
       totalPrice,
     };
 
-    console.log('data here', data);
-
     const response = await axiosInstance.post('order/createOrder', data);
 
     if (response.success) {
-      response.data.items.forEach((item) => {
-        dispatch(clearItemFromCart(item.productId));
-      });
-      history.replace(`/checkout-success/${response.data._id}`);
+      dispatch(changeCurrentLoadingStatus(true));
+
+      setTimeout(() => {
+        response.data.items.forEach((item) => {
+          dispatch(clearItemFromCart(item.productId));
+        });
+      }, 500);
+      setTimeout(() => {
+        dispatch(changeCurrentLoadingStatus(false));
+        history.replace(`/checkout-success/${response.data._id}`);
+      }, 1000);
     }
   };
   return (

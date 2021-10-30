@@ -9,8 +9,7 @@ import { setCurrentUser } from '../../../redux/user/user.actions';
 import { renderErrorMessage } from '../../../utils/helpers';
 import axiosInstance from '../../../utils/axios';
 import { Redirect } from 'react-router-dom';
-
-// import axios from "axios";
+import { changeCurrentLoadingStatus } from '../../../redux/loading/loading.action';
 
 const SignIn = () => {
   const [values, setValues] = useState({
@@ -33,18 +32,19 @@ const SignIn = () => {
   };
   const handleSubmit = async (event) => {
     event.preventDefault();
-    setErr(false);
-    // setLoading(true);
     const response = await axiosInstance.post('/user/login', values);
 
     if (response.success) {
       setIsSucceeded(true);
-
+      setTimeout(() => {
+        dispatch(changeCurrentLoadingStatus(true));
+      }, 1500);
       localStorage.setItem('token', response.data.token);
 
       setTimeout(() => {
+        dispatch(changeCurrentLoadingStatus(false));
         dispatch(setCurrentUser(response.data.user));
-      }, 1500);
+      }, 2500);
     } else {
       setErr(response.message);
     }

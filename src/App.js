@@ -1,6 +1,7 @@
 import HomePage from './components/Homepage/HomePage.component';
 import { Route, Switch } from 'react-router-dom';
-import React, { useEffect, useRef } from 'react';
+import { useSelector } from 'react-redux';
+import React from 'react';
 import './App.css';
 import SignIn from './components/auth/sign-in/sign-in.component';
 import SignUp from './components/auth/sign-up/sign-up.component';
@@ -12,10 +13,14 @@ import ProductDetail from './components/ProductDetail/ProductDetail';
 import CheckoutPage from './components/checkout/checkoutpage.component';
 import OrderDetail from './components/OrderDetail/OrderDetail';
 import OrderSuccess from './components/OrderSuccess/OrderSuccess';
-import { useDispatch, useSelector } from 'react-redux';
-import { toggleCartHidden } from './redux/cart/cart.actions';
+import Loading from './components/Loading/Loading';
 
 function App() {
+  const loading = useSelector((state) => state.loading);
+  if (loading) {
+    return <Loading></Loading>;
+  }
+
   return (
     <div>
       <Switch>
@@ -29,6 +34,7 @@ function App() {
         <Route exact path="/auth/resetpassword" component={ResetPassword} />
         <Route path="/checkout-success/:id" component={OrderSuccess} />
         <Route path="/order/:id" component={OrderDetail} />
+        <Route path="/loading" component={Loading} />
         <Route path="/search" component={Search} />
       </Switch>
     </div>
