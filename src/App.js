@@ -14,6 +14,7 @@ import CheckoutPage from './components/checkout/checkoutpage.component';
 import OrderDetail from './components/OrderDetail/OrderDetail';
 import OrderSuccess from './components/OrderSuccess/OrderSuccess';
 import Loading from './components/Loading/Loading';
+import Contact from './components/contact/Contact.component';
 
 function App() {
   const loading = useSelector((state) => state.loading);

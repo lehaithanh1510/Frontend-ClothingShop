@@ -24,13 +24,6 @@ const CustomNavbar = () => {
         <Logo className="logo" />
       </Link>
       <div className="options">
-        <Link className="option" to="/shop">
-          SHOP
-        </Link>
-        <Link className="option" to="/contact">
-          CONTACT
-        </Link>
-
         {currentUser ? (
           <div
             className="option"
@@ -42,7 +35,7 @@ const CustomNavbar = () => {
           </div>
         ) : (
           <Link className="option" to="/auth/signin">
-            SIGN IN
+            SIGN IN | SIGN UP
           </Link>
         )}
         <CartIcon />
